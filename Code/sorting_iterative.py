@@ -35,12 +35,22 @@ def selection_sort(items):
     unsorted item, and repeating until all items are in sorted order.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Repeat until all items are in sorted order
-    # TODO: Find minimum item in unsorted items
-    # TODO: Swap it with first unsorted item
 
     limit = 0
-    while()
+
+    while limit != len(items) - 1:
+        minIndex = limit
+        minValue = items[minIndex]
+        for i in range(limit + 1, len(items)):  # Loop from limit+1 to the end of array to find minIndex
+            if items[i] < minValue:
+                minIndex = i
+                minValue = items[i]
+        tmp = items[limit]
+        items[limit] = items[minIndex]
+        items[minIndex] = tmp
+        limit += 1
+
+    return items
 
 
 def insertion_sort(items):
@@ -59,4 +69,6 @@ def _swap(items, i, j):
 if __name__ == '__main__':
     items = [4, 5, 2, 3, 6, 1, 10, 2, 4]
     print("Items before sorting: {}".format(items))
-    print("Items after sorting: {}".format(bubble_sort(items)))
+
+    # print("Items after Bubble Sort: {}".format(bubble_sort(items)))
+    print("Items after Selection Sort: {}".format(selection_sort(items)))
