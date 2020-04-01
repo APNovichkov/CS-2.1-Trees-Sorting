@@ -57,11 +57,15 @@ def selection_sort(items):
     """
 
     limit = 0
+    isSorted = False
 
-    while limit != len(items) - 1:
+    while not isSorted:
+        isSorted = True
         minIndex = limit
         minValue = items[minIndex]
         for i in range(limit + 1, len(items)):  # Loop from limit+1 to the end of array to find minIndex
+            if items[i - 1] < items[i]:
+                isSorted = False
             if items[i] < minValue:
                 minIndex = i
                 minValue = items[i]
@@ -74,10 +78,16 @@ def selection_sort(items):
 
 
 def insertion_sort(items):
-    """Sort given items by taking first unsorted item, inserting it in sorted
+    """
+
+    Sort given items by taking first unsorted item, inserting it in sorted
     order in front of items, and repeating until all items are in order.
+
     TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+    TODO: Memory usage: ??? Why and under what conditions?
+
+    """
+
     # TODO: Repeat until all items are in sorted order
     # TODO: Take first unsorted item
     # TODO: Insert it in sorted order in front of items
