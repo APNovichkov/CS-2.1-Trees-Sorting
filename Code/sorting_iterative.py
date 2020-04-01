@@ -2,17 +2,32 @@
 
 
 def is_sorted(items):
-    """Return a boolean indicating whether given items are in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Check that all adjacent items are in order, return early if so
+    """
+
+    Return a boolean indicating whether given items are in sorted order.
+
+    Running time: O(n) Linear time, only one for loop. Best case is first item is out of place. Worst case array is sorted
+    Memory usage: Just the variable to hold the iterator
+
+    """
+
+    for i in range(len(items) - 1):
+        if items[i] > items[i + 1]:
+            return False
+
+    return True
 
 
 def bubble_sort(items):
-    """Sort given items by swapping adjacent items that are out of order, and
+    """
+
+    Sort given items by swapping adjacent items that are out of order, and
     repeating until all items are in sorted order.
+
     Time Complexity: O(n^2) worst case running time when array is completely reversed. Generally still quadratic...
-    Memory Usage: We perform swapping, so everything happens in place. Only memory used is for the 3 variables"""
+    Memory Usage: We perform swapping, so everything happens in place. Only memory used is for the 3 variables
+
+    """
 
     limit = len(items) - 1  # set upper limit to array size
     continueSort = True
@@ -31,10 +46,15 @@ def bubble_sort(items):
 
 
 def selection_sort(items):
-    """Sort given items by finding minimum item, swapping it with first
+    """
+
+    Sort given items by finding minimum item, swapping it with first
     unsorted item, and repeating until all items are in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+
+    Running time: O(n^2) average and worst case. Worst case when array is completely reversed
+    Memory usage: Just the 2 variables, we are swapping again so no extra memory usage
+
+    """
 
     limit = 0
 
@@ -69,6 +89,7 @@ def _swap(items, i, j):
 if __name__ == '__main__':
     items = [4, 5, 2, 3, 6, 1, 10, 2, 4]
     print("Items before sorting: {}".format(items))
-
+    print(f"Is sorted? {is_sorted(items)}")
     # print("Items after Bubble Sort: {}".format(bubble_sort(items)))
     print("Items after Selection Sort: {}".format(selection_sort(items)))
+    print(f"Is sorted? {is_sorted(selection_sort(items))}")
