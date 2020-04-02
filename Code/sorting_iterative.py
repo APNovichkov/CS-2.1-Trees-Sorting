@@ -1,6 +1,7 @@
 #!python3
 from random import shuffle
-
+# from sorting import random_ints
+import sorting
 
 def is_sorted(items):
     """
@@ -14,6 +15,7 @@ def is_sorted(items):
 
     for i in range(len(items) - 1):
         if items[i] > items[i + 1]:
+            print(f"item[{i}]: {items[i]} > items[{i+1}]: {items[i+1]}")
             return False
 
     return True
@@ -34,14 +36,14 @@ def bubble_sort(items):
         return []
 
     limit = len(items) - 1  # set upper limit to array size
-    continueSort = True
+    continue_sort = True
 
-    while(continueSort):
-        continueSort = False  # Set default to false for each run through array
+    while(continue_sort):
+        continue_sort = False  # Set default to false for each run through array
         for i in range(limit):  # Run through all elements until the upper limit
             if items[i] > items[i + 1]:
                 _swap(items, i, i + 1)
-                continueSort = True  # If there has been at least one swap, we should continue sorting..
+                continue_sort = True  # If there has been at least one swap, we should continue sorting..
         limit -= 1
 
     return items
@@ -64,15 +66,15 @@ def selection_sort(items):
 
     limit = 0
     isSorted = False
+    items_len = len(items)
 
     while not isSorted:
         isSorted = True
         minIndex = limit
         minValue = items[minIndex]
-        for i in range(limit + 1, len(items)):  # Loop from limit+1 to the end of array to find minIndex
-            if items[i - 1] < items[i]:
+        for i in range(limit + 1, items_len):  # Loop from limit+1 to the end of array to find minIndex
+            if items[i - 1] > items[i]:
                 isSorted = False
-                # print('isSortedIsFalse @ index: {}'.format(i))
             if items[i] < minValue:
                 minIndex = i
                 minValue = items[i]
@@ -82,7 +84,7 @@ def selection_sort(items):
     return items
 
 
-def insertion_sort(items):
+def insertion_sort_(items):
     """
 
     Sort given items by taking first unsorted item, inserting it in sorted
@@ -110,6 +112,33 @@ def insertion_sort(items):
 
     return items
 
+def insertion_sort(items):
+    """
+
+    Sort given items by taking first unsorted item, inserting it in sorted
+    order in front of items, and repeating until all items are in order.
+
+    Running time: O(n^2) average and worst case. Worst case when array is completely reversed
+    Memory usage: Just some variables, we are swapping again so no extra memory usage
+
+    """
+
+    if len(items) == 0:
+        return []
+
+    limit = 1
+
+    for i in range(1, len(items)):
+        # Reverse bubble sort
+        for j in range(0, i):
+            lo_i = i - j
+            hi_i = i - j - 1
+            if items[lo_i] < items[hi_i]:
+                _swap(items, lo_i, hi_i)
+
+        limit += 1
+
+    return items
 
 def _swap(items, i, j):
     tmp = items[i]
@@ -118,13 +147,16 @@ def _swap(items, i, j):
 
 
 if __name__ == '__main__':
-    items = [i for i in range(50)]
-    shuffle(items)
-    # print("Items before sorting: {}".format(items))
+    # items = sorting.random_ints(20, 1, 10)
+    items = [5, 9, 9, 8, 3, 7, 10, 10, 4, 1, 6, 5, 6, 2, 8, 10, 8, 10, 3, 1]
+    # items = [i for i in range(50)]
+    # shuffle(items)
+    print("Items before sorting: {}".format(items))
     print(f"Is sorted? {is_sorted(items)}")
     # print("Items after Bubble Sort: {}".format(bubble_sort(items)))
-    print(f"Is sorted? {is_sorted(bubble_sort(items))}")
-    # print("Items after Selection Sort: {}".format(selection_sort(items)))
-    print(f"Is sorted? {is_sorted(selection_sort(items))}")
+    # print(f"Is sorted? {is_sorted(bubble_sort(items))}")
+    sorted_items = selection_sort(items)
+    print("Items after Selection Sort: {}".format(sorted_items))
+    print(f"Is sorted? {is_sorted(sorted_items)}")
     # print("Items after Insertion Sort: {}".format(insertion_sort(items)))
-    print(f"Is sorted? {is_sorted(insertion_sort(items))}")
+    # print(f"Is sorted? {is_sorted(insertion_sort(items))}")
