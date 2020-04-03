@@ -1,6 +1,5 @@
 #!python3
-from random import shuffle
-# from sorting import random_ints
+
 import sorting
 
 def is_sorted(items):
@@ -48,8 +47,6 @@ def bubble_sort(items):
 
     return items
 
-
-# TODO fix bug!
 def selection_sort(items):
     """
 
@@ -141,22 +138,18 @@ def insertion_sort(items):
     return items
 
 def _swap(items, i, j):
-    tmp = items[i]
-    items[i] = items[j]
-    items[j] = tmp
+    items[i], items[j] = items[j], items[i]
 
 
 if __name__ == '__main__':
-    # items = sorting.random_ints(20, 1, 10)
-    items = [5, 9, 9, 8, 3, 7, 10, 10, 4, 1, 6, 5, 6, 2, 8, 10, 8, 10, 3, 1]
-    # items = [i for i in range(50)]
-    # shuffle(items)
-    print("Items before sorting: {}".format(items))
+    items = sorting.random_ints(1000, 1, 10)
+
+    # print("Items before sorting: {}".format(items))
     print(f"Is sorted? {is_sorted(items)}")
     # print("Items after Bubble Sort: {}".format(bubble_sort(items)))
     # print(f"Is sorted? {is_sorted(bubble_sort(items))}")
-    sorted_items = selection_sort(items)
-    print("Items after Selection Sort: {}".format(sorted_items))
-    print(f"Is sorted? {is_sorted(sorted_items)}")
+    # sorted_items = selection_sort(items)
+    # print("Items after Selection Sort: {}".format(sorted_items))
+    # print(f"Is sorted? {is_sorted(sorted_items)}")
     # print("Items after Insertion Sort: {}".format(insertion_sort(items)))
-    # print(f"Is sorted? {is_sorted(insertion_sort(items))}")
+    print(f"Is sorted? {is_sorted(insertion_sort(items))}")
