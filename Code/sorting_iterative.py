@@ -1,6 +1,6 @@
-#!python3
+#!python
 
-import sorting
+# import sorting
 
 def is_sorted(items):
     """
