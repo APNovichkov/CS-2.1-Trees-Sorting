@@ -1,7 +1,5 @@
 #!python
 
-# import sorting
-
 def is_sorted(items):
     """
 
@@ -139,17 +137,3 @@ def insertion_sort(items):
 
 def _swap(items, i, j):
     items[i], items[j] = items[j], items[i]
-
-
-if __name__ == '__main__':
-    items = sorting.random_ints(1000, 1, 10)
-
-    # print("Items before sorting: {}".format(items))
-    print(f"Is sorted? {is_sorted(items)}")
-    # print("Items after Bubble Sort: {}".format(bubble_sort(items)))
-    # print(f"Is sorted? {is_sorted(bubble_sort(items))}")
-    # sorted_items = selection_sort(items)
-    # print("Items after Selection Sort: {}".format(sorted_items))
-    # print(f"Is sorted? {is_sorted(sorted_items)}")
-    # print("Items after Insertion Sort: {}".format(insertion_sort(items)))
-    print(f"Is sorted? {is_sorted(insertion_sort(items))}")

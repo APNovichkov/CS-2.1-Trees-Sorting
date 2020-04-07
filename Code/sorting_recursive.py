@@ -1,6 +1,6 @@
 #!python
 
-import sorting_iterative
+from sorting_iterative import insertion_sort
 
 def merge(items1, items2):
     """Merge given lists of items, each assumed to already be in sorted order,
@@ -10,6 +10,8 @@ def merge(items1, items2):
     # TODO: Repeat until one list is empty
     # TODO: Find minimum item in both lists and append it to new list
     # TODO: Append remaining items in non-empty list to new list
+
+    print(f'Merging {items1} and {items2} ')
 
     out = []
     i = 0
@@ -49,16 +51,13 @@ def split_sort_merge(items):
     a list in sorted order.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Split items list into approximately equal halves
-    # TODO: Sort each half using any other sorting algorithm
-    # TODO: Merge sorted halves into one list in sorted order
 
     half = len(items) // 2
     left = items[:half]
     right = items[half:]
 
-    sorting_iterative.insertion_sort(left)
-    sorting_iterative.insertion_sort(right)
+    insertion_sort(left)
+    insertion_sort(right)
 
     items = merge(left, right)
     return items
@@ -72,6 +71,19 @@ def merge_sort(items):
     # TODO: Split items list into approximately equal halves
     # TODO: Sort each half by recursively calling merge sort
     # TODO: Merge sorted halves into one list in sorted order
+
+    if len(items) <= 2:
+        print(f'Reached base case: merging {items[:1]} and {items[1:]}')
+        return merge(items[:1], items[1:])
+
+    half = len(items) // 2
+    left = items[:half]
+    right = items[half:]
+
+    print(f'left: {left} AND right: {right}')
+
+    items = merge(merge_sort(left), merge_sort(right))
+    return items
 
 
 
@@ -103,12 +115,16 @@ def quick_sort(items, low=None, high=None):
 
 
 if __name__ == '__main__':
-    l1 = [3, 5]
-    l2 = [1, 10]
+    # l1 = [3, 5]
+    # l2 = [1, 10]
+    #
+    # merged_l = merge(l1, l2)
+    # print(f"Merged: {merged_l}")
+    #
+    # l3 = [4, 3, 5, 6, 7, 10, 1, 2, 2]
+    # split_sort_merged = split_sort_merge(l3)
+    # print(f"Split sort merged: {split_sort_merged}")
 
-    merged_l = merge(l1, l2)
-    print(f"Merged: {merged_l}")
-
-    l3 = [4, 3, 5, 6, 7, 10, 1, 2, 2]
-    split_sort_merged = split_sort_merge(l3)
-    print(f"Split sort merged: {split_sort_merged}")
+    l4 = [4, 3, 2, 5, 10, 3, 10, 2, 3, 3, 2, 3, 100, 2, 3]
+    merge_sorted = merge_sort(l4)
+    print(f'Merge sorted: {merge_sorted}')
