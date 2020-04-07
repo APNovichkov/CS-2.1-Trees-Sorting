@@ -7,11 +7,6 @@ def merge(items1, items2):
     and return a new list containing all items in sorted order.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Repeat until one list is empty
-    # TODO: Find minimum item in both lists and append it to new list
-    # TODO: Append remaining items in non-empty list to new list
-
-    print(f'Merging {items1} and {items2} ')
 
     out = []
     i = 0
@@ -67,10 +62,6 @@ def merge_sort(items):
     sorting each recursively, and merging results into a list in sorted order.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Check if list is so small it's already sorted (base case)
-    # TODO: Split items list into approximately equal halves
-    # TODO: Sort each half by recursively calling merge sort
-    # TODO: Merge sorted halves into one list in sorted order
 
     if len(items) <= 2:
         return merge(items[:1], items[1:])
@@ -108,16 +99,19 @@ def quick_sort(items, low=None, high=None):
 
 
 if __name__ == '__main__':
-    # l1 = [3, 5]
-    # l2 = [1, 10]
-    #
-    # merged_l = merge(l1, l2)
-    # print(f"Merged: {merged_l}")
-    #
-    # l3 = [4, 3, 5, 6, 7, 10, 1, 2, 2]
-    # split_sort_merged = split_sort_merge(l3)
-    # print(f"Split sort merged: {split_sort_merged}")
+    l1 = [3, 5]
+    l2 = [1, 10]
+
+    print(f'Trying to merge {l1} and {l2}')
+    merged_l = merge(l1, l2)
+    print(f"Merged: {merged_l}\n")
+
+    l3 = [4, 3, 5, 6, 7, 10, 1, 2, 2]
+    print(f'Trying to split sort merge {l3}')
+    split_sort_merged = split_sort_merge(l3)
+    print(f"Split sort merged: {split_sort_merged}\n")
 
     l4 = [4, 3, 2, 5, 10, 3, 10, 2, 3, 3, 2, 3, 100, 2, 3]
+    print(f'Trying to sort {l4}')
     merge_sorted = merge_sort(l4)
-    print(f'Merge sorted: {merge_sorted}')
+    print(f'Merge sorted: {merge_sorted}\n')
