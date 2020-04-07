@@ -73,20 +73,13 @@ def merge_sort(items):
     # TODO: Merge sorted halves into one list in sorted order
 
     if len(items) <= 2:
-        print(f'Reached base case: merging {items[:1]} and {items[1:]}')
         return merge(items[:1], items[1:])
 
     half = len(items) // 2
     left = items[:half]
     right = items[half:]
 
-    print(f'left: {left} AND right: {right}')
-
-    items = merge(merge_sort(left), merge_sort(right))
-    return items
-
-
-
+    return merge(merge_sort(left), merge_sort(right))
 
 def partition(items, low, high):
     """Return index `p` after in-place partitioning given items in range
