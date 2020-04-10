@@ -71,12 +71,24 @@ def partition(items, low, high):
     `[low...p-1]`, and items greater than pivot into range `[p+1...high]`.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Choose a pivot any way and document your method in docstring above
-    # TODO: Loop through all items in range [low...high]
-    # TODO: Move items less than pivot into front of range [low...p-1]
-    # TODO: Move items greater than pivot into back of range [p+1...high]
-    # TODO: Move pivot item into final position [p] and return index p
 
+    pivot = high
+    print(f'p index: {pivot} -> {items[pivot]}')
+    print(f'Partitoning: {items[low:high+1]}')
+    i = low
+    for j in range(low, high):
+        if items[j] <= items[pivot]:
+            swap(items, i, j)
+            i += 1
+
+    (items[i], items[high]) = (items[high], items[i])
+    print(f'Done partioning: {items[low:high+1]}')
+
+    return i
+
+
+def swap(items, i, j):
+    items[i], items[j] = items[j], items[i]
 
 def quick_sort(items, low=None, high=None):
     """Sort given items in place by partitioning items in range `[low...high]`
@@ -84,26 +96,38 @@ def quick_sort(items, low=None, high=None):
     TODO: Best case running time: ??? Why and under what conditions?
     TODO: Worst case running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Check if high and low range bounds have default values (not given)
-    # TODO: Check if list or range is so small it's already sorted (base case)
-    # TODO: Partition items in-place around a pivot and get index of pivot
-    # TODO: Sort each sublist range by recursively calling quick sort
+
+    if high is None or low is None:
+        low = 0
+        high = len(items) - 1
+
+    if low < high:
+        p_index = partition(items, low, high)
+        quick_sort(items, low, p_index - 1)
+        quick_sort(items, p_index + 1, high)
 
 
 if __name__ == '__main__':
-    l1 = [3, 5]
-    l2 = [1, 10]
 
-    print(f'Trying to merge {l1} and {l2}')
-    merged_l = merge(l1, l2)
-    print(f"Merged: {merged_l}\n")
+    l5 = [4, 3, 2, 3, 2, 10, 9, 5]
+    print(f'before sorting: {l5}')
+    # partition(l5, 0, len(l5)-1)
+    quick_sort(l5)
+    print(f'quick sorted: {l5}')
 
-    l3 = [4, 3, 5, 6, 7, 10, 1, 2, 2]
-    print(f'Trying to split sort merge {l3}')
-    split_sort_merge(l3)
-    print(f"Split sort merged: {l3}\n")
-
-    l4 = [4, 3]
-    print(f'Trying to sort {l4}')
-    merge_sort(l4)
-    print(f'Merge sorted: {l4}\n')
+    # l1 = [3, 5]
+    # l2 = [1, 10]
+    #
+    # print(f'Trying to merge {l1} and {l2}')
+    # merged_l = merge(l1, l2)
+    # print(f"Merged: {merged_l}\n")
+    #
+    # l3 = [4, 3, 5, 6, 7, 10, 1, 2, 2]
+    # print(f'Trying to split sort merge {l3}')
+    # split_sort_merge(l3)
+    # print(f"Split sort merged: {l3}\n")
+    #
+    # l4 = [4, 3]
+    # print(f'Trying to sort {l4}')
+    # merge_sort(l4)
+    # print(f'Merge sorted: {l4}\n')
