@@ -2,7 +2,7 @@
 
 from sorting import random_ints
 from sorting_iterative import is_sorted, bubble_sort, selection_sort, insertion_sort
-from sorting_recursive import split_sort_merge, merge_sort, quick_sort, partition
+from sorting_recursive import split_sort_merge, merge_sort, quick_sort
 from sorting_integer import counting_sort, bucket_sort
 import unittest
 
@@ -178,13 +178,14 @@ class IntegerSortTest(unittest.TestCase):
         sort(items3)  # Mutate
         assert items3 == sorted_items3
 
-    def test_partition_sort(self):
-        items1 = [1, 4, 2, 3]
-        pivot_index = partition(items1, 0, 3)
-        assert pivot_index == 2
-        items2 = [3, 2, 1, 4, 10, 2]
-        pivot_index = partition(items2, 0, len(items2) - 1)
-        assert pivot_index == 2
+    # Doesnt work anymore because we are choosing random pivots
+    # def test_partition_sort(self):
+    #     items1 = [1, 4, 2, 3]
+    #     pivot_index = partition(items1, 0, 3)
+    #     assert pivot_index == 2
+    #     items2 = [3, 2, 1, 4, 10, 2]
+    #     pivot_index = partition(items2, 0, len(items2) - 1)
+    #     assert pivot_index == 2
 
 
 class StringSortTest(unittest.TestCase):

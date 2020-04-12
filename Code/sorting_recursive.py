@@ -1,6 +1,8 @@
 #!python
 
 from sorting_iterative import insertion_sort
+from random import seed
+from random import randint
 
 def merge(items1, items2):
     """
@@ -78,7 +80,20 @@ def merge_sort(items):
     items[:] = merge(merge_sort(left), merge_sort(right))
     return items
 
-def partition(items, low, high):
+def partition_constant(items, low, high):
+    pivot = high
+
+    i = low
+    for j in range(low, high):
+        if items[j] <= items[pivot]:
+            swap(items, i, j)
+            i += 1
+
+    (items[i], items[high]) = (items[high], items[i])
+
+    return i
+
+def partition_random(items, low, high):
     """
     Return index `p` after in-place partitioning given items in range
     `[low...high]` by choosing a pivot (TODO: document your method here) from
@@ -88,18 +103,20 @@ def partition(items, low, high):
     Running time: O(n) worst and best case, running from low to high
     Memory usage: O(1) because partitioning in-place
     """
+    seed(1)
+    pivot = randint(low, high - 1)
 
-    pivot = high
-    # print(f'p index: {pivot} -> {items[pivot]}')
-    # print(f'Partitoning: {items[low:high+1]}')
     i = low
-    for j in range(low, high):
+    for j in range(low, high + 1):
+        if j == pivot:
+            continue
         if items[j] <= items[pivot]:
+            if i == pivot:
+                pivot = j
             swap(items, i, j)
             i += 1
 
-    (items[i], items[high]) = (items[high], items[i])
-    # print(f'Done partioning: {items[low:high+1]}')
+    (items[i], items[pivot]) = (items[pivot], items[i])
 
     return i
 
@@ -121,7 +138,7 @@ def quick_sort(items, low=None, high=None):
         high = len(items) - 1
 
     if low < high:
-        p_index = partition(items, low, high)
+        p_index = partition_random(items, low, high)
         quick_sort(items, low, p_index - 1)
         quick_sort(items, p_index + 1, high)
 
