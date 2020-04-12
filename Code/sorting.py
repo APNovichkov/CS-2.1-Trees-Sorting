@@ -3,6 +3,7 @@
 from sorting_iterative import is_sorted, bubble_sort, selection_sort, insertion_sort
 from sorting_recursive import split_sort_merge, merge_sort, quick_sort
 from sorting_integer import counting_sort, bucket_sort
+from utils import time_it
 
 
 def random_ints(count=20, min=1, max=50):
@@ -11,7 +12,7 @@ def random_ints(count=20, min=1, max=50):
     import random
     return [random.randint(min, max) for _ in range(count)]
 
-
+@time_it
 def test_sorting(sort=bubble_sort, num_items=20, max_value=50):
     """Test sorting algorithms with a small list of random items."""
     # Create a list of items randomly sampled from range [1...max_value]

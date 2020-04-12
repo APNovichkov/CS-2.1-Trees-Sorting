@@ -11,6 +11,12 @@ def merge(items1, items2):
     Memory usage: O(n), created a new array of size n to do the merging
     """
 
+    if items1 is None:
+        return items2
+
+    if items2 is None:
+        return items1
+
     out = []
     i = 0
     j = 0
@@ -30,6 +36,10 @@ def merge(items1, items2):
         else:
             out.append(items2[j])
             j += 1
+
+
+    print(f'FROM MERGE -> returning: {out}')
+
 
     return out
 
@@ -63,14 +73,14 @@ def merge_sort(items):
     """
 
     if len(items) <= 2:
-        items[:] = merge(items[:1], items[1:])
-        return items
+        return merge(items[:1], items[1:])
 
     half = len(items) // 2
     left = items[:half]
     right = items[half:]
 
     items[:] = merge(merge_sort(left), merge_sort(right))
+    return items
 
 def partition(items, low, high):
     """Return index `p` after in-place partitioning given items in range
@@ -81,8 +91,8 @@ def partition(items, low, high):
     TODO: Memory usage: ??? Why and under what conditions?"""
 
     pivot = high
-    print(f'p index: {pivot} -> {items[pivot]}')
-    print(f'Partitoning: {items[low:high+1]}')
+    # print(f'p index: {pivot} -> {items[pivot]}')
+    # print(f'Partitoning: {items[low:high+1]}')
     i = low
     for j in range(low, high):
         if items[j] <= items[pivot]:
@@ -90,7 +100,7 @@ def partition(items, low, high):
             i += 1
 
     (items[i], items[high]) = (items[high], items[i])
-    print(f'Done partioning: {items[low:high+1]}')
+    # print(f'Done partioning: {items[low:high+1]}')
 
     return i
 
@@ -117,11 +127,11 @@ def quick_sort(items, low=None, high=None):
 
 if __name__ == '__main__':
 
-    l5 = [4, 3, 2, 3, 2, 10, 9, 5]
-    print(f'before sorting: {l5}')
-    # partition(l5, 0, len(l5)-1)
-    quick_sort(l5)
-    print(f'quick sorted: {l5}')
+    # l5 = [4, 3, 2, 3, 2, 10, 9, 5]
+    # print(f'before sorting: {l5}')
+    # # partition(l5, 0, len(l5)-1)
+    # quick_sort(l5)
+    # print(f'quick sorted: {l5}')
 
     # l1 = [3, 5]
     # l2 = [1, 10]
@@ -135,7 +145,8 @@ if __name__ == '__main__':
     # split_sort_merge(l3)
     # print(f"Split sort merged: {l3}\n")
     #
-    # l4 = [4, 3]
-    # print(f'Trying to sort {l4}')
-    # merge_sort(l4)
-    # print(f'Merge sorted: {l4}\n')
+    l4 = [8, 14, 2, 20, 15, 7, 17, 20, 2]
+    # l4 = [2, 4, 2]
+    print(f'Trying to sort {l4}')
+    merge_sort(l4)
+    print(f'Merge sorted: {l4}\n')
