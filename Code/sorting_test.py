@@ -130,10 +130,15 @@ class IntegerSortTest(unittest.TestCase):
         items4 = [7, 5, 3, 7, 5, 7, 5, 3, 7]
         sort(items4)
         assert items4 == [3, 3, 5, 5, 5, 7, 7, 7, 7]
-        # TODO: Create lists of integers with many duplicate values
-        # TODO: Write more test cases with assert equal list statements
-        # You'll need a lot more than this to test sorting algorithm robustness
-        # ...
+        items5 = [4, 2, 1, 4, 2, 1, 4, 2, 1]
+        sort(items5)
+        assert items5 == [1, 1, 1, 2, 2, 2, 4, 4, 4]
+        items6 = [1, 0, 0, 0, 0, 1]
+        sort(items6)
+        assert items6 == [0, 0, 0, 0, 1, 1]
+        items7 = [-5, 1, 0, 0, 0, 10, 1]
+        sort(items7)
+        assert items7 == [-5, 0, 0, 0, 1, 1, 10]
 
     def test_sort_on_lists_of_random_integers(self):
         # Generate list of 10 random integers from range [1...20]
@@ -186,9 +191,12 @@ class StringSortTest(unittest.TestCase):
         items3 = ['B', 'C', 'A']
         sort(items3)
         assert items3 == ['A', 'B', 'C']
-        # TODO: Write more test cases with assert equal list statements
-        # You'll need a lot more than this to test sorting algorithm robustness
-        # ...
+        items4 = ['G', 'G', 'A', 'C']
+        sort(items4)
+        assert items4 == ['A', 'C', 'G', 'G']
+        items5 = ['Z', 'Y', 'W', 'A', 'A']
+        sort(items5)
+        assert items5 == ['A', 'A', 'W', 'Y', 'Z']
 
     def test_sort_on_fish_book_title(self):
         items = 'one fish two fish red fish blue fish'.split()
