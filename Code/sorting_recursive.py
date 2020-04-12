@@ -138,7 +138,7 @@ def quick_sort(items, low=None, high=None):
         high = len(items) - 1
 
     if low < high:
-        p_index = partition_random(items, low, high)
+        p_index = partition_constant(items, low, high)
         quick_sort(items, low, p_index - 1)
         quick_sort(items, p_index + 1, high)
 
