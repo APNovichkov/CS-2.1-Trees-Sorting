@@ -3,11 +3,13 @@
 from sorting_iterative import insertion_sort
 
 def merge(items1, items2):
-    """Merge given lists of items, each assumed to already be in sorted order,
+    """
+    Merge given lists of items, each assumed to already be in sorted order,
     and return a new list containing all items in sorted order.
 
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+    Running time: O(n), just running through both of the arrays once
+    Memory usage: O(n), created a new array of size n to do the merging
+    """
 
     out = []
     i = 0
@@ -32,11 +34,14 @@ def merge(items1, items2):
     return out
 
 def split_sort_merge(items):
-    """Sort given items by splitting list into two approximately equal halves,
+    """
+    Sort given items by splitting list into two approximately equal halves,
     sorting each with an iterative sorting algorithm, and merging results into
     a list in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+
+    Running time: O(n^2) still, but faster than just insertion sort because we cut time by 2
+    Memory usage: O(n) because we created 1 array of constant sapce when we merged left and right sides
+    """
 
     half = len(items) // 2
     left = items[:half]
@@ -49,10 +54,13 @@ def split_sort_merge(items):
 
 
 def merge_sort(items):
-    """Sort given items by splitting list into two approximately equal halves,
+    """
+    Sort given items by splitting list into two approximately equal halves,
     sorting each recursively, and merging results into a list in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+
+    Running time: O(nlogn), same for Best/Worst case, consistently the same Time Complexity
+    Memory Usage: O(nlogn), Have to create a new array per split to combine two arrays
+    """
 
     if len(items) <= 2:
         items[:] = merge(items[:1], items[1:])
