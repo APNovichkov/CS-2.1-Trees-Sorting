@@ -79,12 +79,15 @@ def merge_sort(items):
     return items
 
 def partition(items, low, high):
-    """Return index `p` after in-place partitioning given items in range
+    """
+    Return index `p` after in-place partitioning given items in range
     `[low...high]` by choosing a pivot (TODO: document your method here) from
     that range, moving pivot into index `p`, items less than pivot into range
     `[low...p-1]`, and items greater than pivot into range `[p+1...high]`.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+
+    Running time: O(n) worst and best case, running from low to high
+    Memory usage: O(1) because partitioning in-place
+    """
 
     pivot = high
     # print(f'p index: {pivot} -> {items[pivot]}')
@@ -107,9 +110,11 @@ def swap(items, i, j):
 def quick_sort(items, low=None, high=None):
     """Sort given items in place by partitioning items in range `[low...high]`
     around a pivot item and recursively sorting each remaining sublist range.
-    TODO: Best case running time: ??? Why and under what conditions?
-    TODO: Worst case running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+
+    Best case running time: O(nlogn) when we choose a good pivot, because then we have balanced partitioning
+    Worst case running time: O(n^2) when we have a reverse list, we end up with a one-sided linked list partitioning
+    Memory usage: O(1) Becase we are partitioning in-place, not creating any new arrays
+    """
 
     if high is None or low is None:
         low = 0
