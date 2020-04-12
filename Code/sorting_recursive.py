@@ -37,10 +37,6 @@ def merge(items1, items2):
             out.append(items2[j])
             j += 1
 
-
-    print(f'FROM MERGE -> returning: {out}')
-
-
     return out
 
 def split_sort_merge(items):
