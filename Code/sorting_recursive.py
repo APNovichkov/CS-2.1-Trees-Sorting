@@ -4,6 +4,9 @@ from sorting_iterative import insertion_sort
 from random import seed
 from random import randint
 
+def merge_mem(items, start, end):
+    pass
+
 def merge(items1, items2):
     """
     Merge given lists of items, each assumed to already be in sorted order,
@@ -60,6 +63,19 @@ def split_sort_merge(items):
 
     items[:] = merge(left, right)
 
+def merge_sort_mem(items, start, end):
+
+    if end - start <= 2:
+        return merge_mem(items, start, end)
+
+    half = len(items) // 2
+    left_start = start
+    left_end = start + half
+    right_start = start + half + 1
+    right_end = end
+
+    items[:] = merge_mem(merge_sort(items, left_start, left_end), merge_sort(items, right_start, right_end))
+    return items
 
 def merge_sort(items):
     """
