@@ -316,43 +316,84 @@ def insertion_sort_with_key(items, key):
 
     return items
 
+def cocktail_shaker_sort(items):
+    """
+    Essentially bubble sort going back and forth looking first for the max value and then
+    the smallest value
+
+    Running time: O(n^2)
+    Memory usage: O(1)
+    """
+
+    if len(items) == 0:
+        return []
+
+    upper_limit = len(items) - 1  # set upper limit to array size
+    lower_limit = len(items) - 1
+    continue_sort = True
+
+    while continue_sort:
+        continue_sort = False  # Set default to false for each run through array
+
+        for i in range(upper_limit):  # Run through all elements until the upper limit
+            if items[i] > items[i + 1]:
+                _swap(items, i, i + 1)
+                continue_sort = True  # If there has been at least one swap, we should continue sorting..
+
+        for i in range(lower_limit):
+            if items[lower_limit - i] < items[lower_limit - i - 1]:
+                _swap(items, i, i - 1)
+                continue_sort = True
+
+        upper_limit -= 1
+        lower_limit -= 1
+
+
 def _swap(items, i, j):
     items[i], items[j] = items[j], items[i]
 
 
 if __name__ == '__main__':
-    student_tuples = [
-        ('john', 'A', 12),
-        ('jane', 'B', 10),
-        ('dave', 'B', 15),
-    ]
 
-    print(f'students before: {student_tuples}')
-    bubble_sort_with_key(student_tuples, lambda student: student[2])
-    print(f'students after bubble sort with key: {student_tuples}')
-    print(f'Is sorted by key: {is_sorted_with_key(student_tuples, lambda student: student[2])}')
+    l0 = [1, 3, 2, 5, 4, 10, 4, 20, 10]
+    print(f'Items before: {l0}')
+    cocktail_shaker_sort(l0)
+    print(f'Items after cocktail shaker sort: {l0}')
+    print(f'is_sorted? {is_sorted(l0)}')
 
-    student_tuples = [
-        ('john', 'A', 12),
-        ('jane', 'B', 10),
-        ('dave', 'B', 15),
-    ]
 
-    print(f'students before: {student_tuples}')
-    selection_sort_with_key(student_tuples, lambda student: student[2])
-    print(f'students after selection sort with key: {student_tuples}')
-    print(f'Is sorted by key: {is_sorted_with_key(student_tuples, lambda student: student[2])}')
-
-    student_tuples = [
-        ('john', 'A', 12),
-        ('jane', 'B', 10),
-        ('dave', 'B', 15),
-    ]
-
-    print(f'students before: {student_tuples}')
-    insertion_sort_with_key(student_tuples, lambda student: student[2])
-    print(f'students after insertion sort with key: {student_tuples}')
-    print(f'Is sorted by key: {is_sorted_with_key(student_tuples, lambda student: student[2])}')
+    # student_tuples = [
+    #     ('john', 'A', 12),
+    #     ('jane', 'B', 10),
+    #     ('dave', 'B', 15),
+    # ]
+    #
+    # print(f'students before: {student_tuples}')
+    # bubble_sort_with_key(student_tuples, lambda student: student[2])
+    # print(f'students after bubble sort with key: {student_tuples}')
+    # print(f'Is sorted by key: {is_sorted_with_key(student_tuples, lambda student: student[2])}')
+    #
+    # student_tuples = [
+    #     ('john', 'A', 12),
+    #     ('jane', 'B', 10),
+    #     ('dave', 'B', 15),
+    # ]
+    #
+    # print(f'students before: {student_tuples}')
+    # selection_sort_with_key(student_tuples, lambda student: student[2])
+    # print(f'students after selection sort with key: {student_tuples}')
+    # print(f'Is sorted by key: {is_sorted_with_key(student_tuples, lambda student: student[2])}')
+    #
+    # student_tuples = [
+    #     ('john', 'A', 12),
+    #     ('jane', 'B', 10),
+    #     ('dave', 'B', 15),
+    # ]
+    #
+    # print(f'students before: {student_tuples}')
+    # insertion_sort_with_key(student_tuples, lambda student: student[2])
+    # print(f'students after insertion sort with key: {student_tuples}')
+    # print(f'Is sorted by key: {is_sorted_with_key(student_tuples, lambda student: student[2])}')
 
     # l1 = [1, 4, 2, 5, 3]
     # print(f'Items before: {l1}')
