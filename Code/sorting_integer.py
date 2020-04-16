@@ -32,7 +32,7 @@ def bucket_sort(numbers, num_buckets=10):
     Sort given numbers by distributing into buckets representing subranges,
     then sorting each bucket and concatenating all buckets in sorted order.
 
-    Running time: O(n), only linear for loops used here
+    Running time: O(nlogn), have to run sort on every bucket, need to sort all items
     Memory usage: O(n), Creating a new list of lists with n number of elements
     """
 
@@ -44,9 +44,13 @@ def bucket_sort(numbers, num_buckets=10):
     for num in numbers:
         b_idx = _get_bucket_index(num, num_buckets, max_num)
         buckets[b_idx].append(num)
-        buckets[b_idx].sort()
+
+    # O(nlogn)
+    for bucket in buckets:
+        bucket.sort()
 
     number_index = 0
+
     # O(n)
     for bucket in buckets:
         for num in bucket:
@@ -55,7 +59,7 @@ def bucket_sort(numbers, num_buckets=10):
 
 def _get_bucket_index(num, num_buckets, max_num):
     """Return the bucket index from a formula."""
-    
+
     return (num * num_buckets) // (max_num + 1)
 
 
