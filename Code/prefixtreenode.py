@@ -11,17 +11,18 @@ class PrefixTreeNode:
     # Hint: Choosing list or dict affects implementation of all child methods
 
     # Chose a hashmap
-    CHILDREN_TYPE = {}
+    CHILDREN_TYPE = dict
 
     def __init__(self, character=None):
         """Initialize this prefix tree node with the given character value, an
         empty structure of children nodes, and a boolean terminal property."""
-        # Character that this node represents
+
         self.character = character
-        # Data structure to associate character keys to children node values
         self.children = PrefixTreeNode.CHILDREN_TYPE()
-        # Marks if this node terminates a string in the prefix tree
         self.terminal = False
+
+    def set_terminal(self):
+        self.terminal = True
 
     def is_terminal(self):
         """Return True if this prefix tree node terminates a string."""
@@ -37,11 +38,12 @@ class PrefixTreeNode:
         """Return True if this prefix tree node has a child node that
         represents the given character amongst its children."""
 
-        return self.chilren.get(character) is not None
+        return self.children.get(character) is not None
 
     def get_child(self, character):
         """Return this prefix tree node's child node that represents the given
         character if it is amongst its children, or raise ValueError if not."""
+
         if self.has_child(character):
             return self.children.get(character)
         else:
@@ -50,15 +52,18 @@ class PrefixTreeNode:
     def add_child(self, character, child_node):
         """Add the given character and child node as a child of this node, or
         raise ValueError if given character is amongst this node's children."""
+
         if not self.has_child(character):
-            self.children[character]: PrefixTreeNode(character)
+            self.children[character] = child_node
         else:
             raise ValueError(f'Child exists for character {character!r}')
 
     def __repr__(self):
         """Return a code representation of this prefix tree node."""
+
         return f'PrefixTreeNode({self.character!r})'
 
     def __str__(self):
         """Return a string view of this prefix tree node."""
+
         return f'({self.character})'
