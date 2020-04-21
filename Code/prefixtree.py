@@ -93,9 +93,9 @@ class PrefixTree:
         with the given prefix string."""
 
         completions = []
-        root, _ = self._find_node(prefix)
+        root, depth = self._find_node(prefix)
 
-        if root.character != '':
+        if depth == len(prefix):
             self._traverse(root, prefix, lambda x: completions.append(x))
 
         return completions
@@ -153,8 +153,8 @@ def create_prefix_tree(strings):
         completions = tree.complete(prefix)
         print(f'complete({prefix!r}): {completions}')
 
-    completions = tree.complete('BC')
-    print(f'complete(BC): {completions}')
+    completions = tree.complete('ABC')
+    print(f'complete(ABC): {completions}')
 
     print('\nRetrieving all strings:')
     retrieved_strings = tree.strings()
