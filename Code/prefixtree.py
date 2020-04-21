@@ -41,16 +41,8 @@ class PrefixTree:
     def contains(self, string):
         """Return True if this prefix tree contains the given string."""
 
-        node = self.root
-        for char in string:
-            if node.num_children() == 0:
-                return False
-            if not node.has_child(char):
-                return False
-            node = node.get_child(char)
-
-        print(f'at node: {node.character}')
-        return node.is_terminal()
+        node, depth = self._find_node(string)
+        return depth == len(string) and node.is_terminal()
 
     def insert(self, string):
         """Insert the given string into this prefix tree."""
@@ -64,8 +56,7 @@ class PrefixTree:
 
         if not node.is_terminal():
             self.size += 1
-
-        node.set_terminal()
+            node.set_terminal()
 
     def _find_node(self, string):
         """Return a pair containing the deepest node in this prefix tree that
@@ -73,16 +64,11 @@ class PrefixTree:
         The depth returned is equal to the number of prefix characters matched.
         Search is done iteratively with a loop starting from the root node."""
 
-        # Match the empty string
-        if len(string) == 0:
-            return self.root, 0
-
         node = self.root
         max_depth = 0
         for char in string:
             if not node.has_child(char):
                 break
-
             max_depth += 1
             node = node.get_child(char)
 
@@ -141,7 +127,7 @@ def create_prefix_tree(strings):
         print(f'contains({string!r}): {result}')
 
     print('\nSearching for strings not in tree:')
-    prefixes = sorted(set(string[:len(string)//2] for string in strings))
+    prefixes = sorted(set(string[:len(string) // 2] for string in strings))
     for prefix in prefixes:
         if len(prefix) == 0 or prefix in strings:
             continue
