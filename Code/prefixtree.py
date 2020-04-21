@@ -91,31 +91,32 @@ class PrefixTree:
     def complete(self, prefix):
         """Return a list of all strings stored in this prefix tree that start
         with the given prefix string."""
-        # Create a list of completions in prefix tree
+
         completions = []
-        root = _find_node(prefix)
-        # TODO
+        root, _ = self._find_node(prefix)
+
+        if root.character != '':
+            self._traverse(root, prefix, lambda x: completions.append(x))
+
+        return completions
 
     def strings(self):
         """Return a list of all strings stored in this prefix tree."""
-        # Create a list of all strings in prefix tree
-        all_strings = []
-        # TODO
+
+        all_words = []
+        self._traverse(self.root, '', all_words.append)
+        return all_words
 
     def _traverse(self, node, prefix, visit):
         """Traverse this prefix tree with recursive depth-first traversal.
         Start at the given node with the given prefix representing its path in
         this prefix tree and visit each node with the given visit function."""
-        # TODO
 
-        if node == null:
-            return
+        if node.is_terminal():
+            visit(prefix)
 
-        c_string = f'{prefix}{node.character}'
-
-        _traverse(node.left, c_string, visit)
-        visit(node)
-        # TODO
+        for child in node.get_children():
+            self._traverse(child, prefix + child.character, visit)
 
 
 def create_prefix_tree(strings):
@@ -152,6 +153,9 @@ def create_prefix_tree(strings):
         completions = tree.complete(prefix)
         print(f'complete({prefix!r}): {completions}')
 
+    completions = tree.complete('BC')
+    print(f'complete(BC): {completions}')
+
     print('\nRetrieving all strings:')
     retrieved_strings = tree.strings()
     print(f'strings: {retrieved_strings}')
@@ -162,7 +166,8 @@ def create_prefix_tree(strings):
 if __name__ == '__main__':
     # Create a dictionary of tongue-twisters with similar words to test with
     tongue_twisters = {
-        'Seashells': 'Shelly sells seashells by the sea shore'.split(),
+        'Test': ['ABC', 'ABD', 'A', 'XYZ']
+        # 'Seashells': 'Shelly sells seashells by the sea shore'.split(),
         # 'Peppers': 'Peter Piper picked a peck of pickled peppers'.split(),
         # 'Woodchuck': ('How much wood would a wood chuck chuck'
         #                ' if a wood chuck could chuck wood').split()
