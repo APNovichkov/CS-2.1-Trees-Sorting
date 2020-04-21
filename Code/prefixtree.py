@@ -47,11 +47,9 @@ class PrefixTree:
     def insert(self, string):
         """Insert the given string into this prefix tree."""
 
-        node = self.root
-        for char in string:
-            if not node.has_child(char):
-                node.add_child(char, PrefixTreeNode(char))
-
+        node, depth = self._find_node(string)
+        for char in string[depth:]:
+            node.add_child(char, PrefixTreeNode(char))
             node = node.get_child(char)
 
         if not node.is_terminal():
