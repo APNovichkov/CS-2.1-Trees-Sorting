@@ -4,7 +4,8 @@ from prefixtreenode import PrefixTreeNode
 
 
 class PrefixTree:
-    """PrefixTree: A multi-way prefix tree that stores strings with efficient
+    """
+    PrefixTree: A multi-way prefix tree that stores strings with efficient
     methods to insert a string into the tree, check if it contains a matching
     string, and retrieve all strings that start with a given prefix string.
     Time complexity of these methods depends only on the number of strings
@@ -13,7 +14,8 @@ class PrefixTree:
     its height depends only on the length of the longest string stored in it.
     This makes a prefix tree effective for spell-checking and autocompletion.
     Each string is stored as a sequence of characters along a path from the
-    tree's root node to a terminal node that marks the end of the string."""
+    tree's root node to a terminal node that marks the end of the string.
+    """
 
     # Constant for the start character stored in the prefix tree's root node
     START_CHARACTER = ''
@@ -34,7 +36,11 @@ class PrefixTree:
         return f'PrefixTree({self.strings()!r})'
 
     def is_empty(self):
-        """Return True if this prefix tree is empty (contains no strings)."""
+        """
+        Return True if this prefix tree is empty (contains no strings).
+        Time complexity: O(1)
+        Memory complexity: O(1)
+        """
 
         return self.size == 0
 
@@ -57,10 +63,15 @@ class PrefixTree:
             node.set_terminal()
 
     def _find_node(self, string):
-        """Return a pair containing the deepest node in this prefix tree that
+        """
+        Return a pair containing the deepest node in this prefix tree that
         matches the longest prefix of the given string and the node's depth.
         The depth returned is equal to the number of prefix characters matched.
-        Search is done iteratively with a loop starting from the root node."""
+        Search is done iteratively with a loop starting from the root node.
+        
+        Time complexity: O(logn) - where n is the max length of a word 
+        Memory complexity: O(1)
+        """
 
         node = self.root
         max_depth = 0
@@ -73,8 +84,17 @@ class PrefixTree:
         return node, max_depth
 
     def complete(self, prefix):
-        """Return a list of all strings stored in this prefix tree that start
-        with the given prefix string."""
+        """
+        Return a list of all strings stored in this prefix tree that start
+        with the given prefix string.
+        
+        a - numberOfNodes after prefix
+        n - numberOfWords
+        x - lengthOfMaxWord
+
+        Time complexity: O(n) - 
+        Memory complexity: O(x*n) - 
+        """
 
         completions = []
         root, depth = self._find_node(prefix)
@@ -85,16 +105,25 @@ class PrefixTree:
         return completions
 
     def strings(self):
-        """Return a list of all strings stored in this prefix tree."""
+        """
+        Return a list of all strings stored in this prefix tree.
+        Time complexity: O(n) - where n is the number of words * average length of the words
+        Memory complexity: O(a) - where a is the num words in the prefix tree
+        """
 
         all_words = []
         self._traverse(self.root, '', all_words.append)
         return all_words
 
     def _traverse(self, node, prefix, visit):
-        """Traverse this prefix tree with recursive depth-first traversal.
+        """
+        Traverse this prefix tree with recursive depth-first traversal.
         Start at the given node with the given prefix representing its path in
-        this prefix tree and visit each node with the given visit function."""
+        this prefix tree and visit each node with the given visit function.
+        
+        Time complexity: O(n) - where n is the number of words * average length of the words
+        Memory complexity: O(1) - constant memory
+        """
 
         if node.is_terminal():
             visit(prefix)

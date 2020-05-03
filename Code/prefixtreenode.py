@@ -1,6 +1,5 @@
 #!python3
 
-
 class PrefixTreeNode:
     """PrefixTreeNode: A node for use in a prefix tree that stores a single
     character from a string and a structure of children nodes below it, which
@@ -22,27 +21,47 @@ class PrefixTreeNode:
         self.terminal = False
 
     def set_terminal(self):
+        """
+        Time complexity: O(1)
+        Memory complexity: O(1)
+        """
         self.terminal = True
 
     def is_terminal(self):
-        """Return True if this prefix tree node terminates a string."""
+        """
+        Return True if this prefix tree node terminates a string.
+        Time complexity: O(1)
+        Memory complexity: O(1)
+        """
 
         return self.terminal
 
     def num_children(self):
-        """Return the number of children nodes this prefix tree node has."""
+        """
+        Return the number of children nodes this prefix tree node has.
+        Time complexity: O(1) - pretty sure .keys() is constant time
+        Memory complexity: O(1)
+        """
 
         return len(self.children.keys())
 
     def has_child(self, character):
-        """Return True if this prefix tree node has a child node that
-        represents the given character amongst its children."""
+        """
+        Return True if this prefix tree node has a child node that
+        represents the given character amongst its children.
+        Time complexity: O(1) - Lookup in HT is constant time
+        Memory complexity: O(1)
+        """
 
         return self.children.get(character) is not None
 
     def get_child(self, character):
-        """Return this prefix tree node's child node that represents the given
-        character if it is amongst its children, or raise ValueError if not."""
+        """
+        Return this prefix tree node's child node that represents the given
+        character if it is amongst its children, or raise ValueError if not.
+        Time complexity: O(1) - Lookup in HT is constant time
+        Memory complexity: O(1)
+        """
 
         if self.has_child(character):
             return self.children.get(character)
@@ -50,8 +69,12 @@ class PrefixTreeNode:
             raise ValueError(f'No child exists for character {character!r}')
 
     def add_child(self, character, child_node):
-        """Add the given character and child node as a child of this node, or
-        raise ValueError if given character is amongst this node's children."""
+        """
+        Add the given character and child node as a child of this node, or
+        raise ValueError if given character is amongst this node's children.
+        Time complexity: O(1) - Insertion into HT is constant time
+        Memory complexity: O(1)
+        """
 
         if not self.has_child(character):
             self.children[character] = child_node
@@ -59,6 +82,10 @@ class PrefixTreeNode:
             raise ValueError(f'Child exists for character {character!r}')
 
     def get_children(self):
+        """
+        Time complexity: O(1) - pretty sure .values() is constant time under the hood
+        Memory complexity: O(1)
+        """
         return self.children.values()
 
     def __repr__(self):

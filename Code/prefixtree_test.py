@@ -32,7 +32,7 @@ class PrefixTreeTest(unittest.TestCase):
 
     def test_insert_with_string(self):
         tree = PrefixTree()
-        tree.insert('AB')
+        tree.insert('ABC')
         # Verify root node
         assert tree.root.character == PrefixTree.START_CHARACTER
         assert tree.root.is_terminal() is False
@@ -47,10 +47,15 @@ class PrefixTreeTest(unittest.TestCase):
         # Verify node 'B'
         node_B = node_A.get_child('B')
         assert node_B.character == 'B'
-        assert node_B.is_terminal() is True
-        assert node_B.num_children() == 0
+        assert node_B.is_terminal() is False
+        assert node_B.num_children() == 1
+        # Verify node 'C'
+        node_C = node_B.get_child('C')
+        assert node_C.character == 'C'
+        assert node_C.is_terminal() is True
+        assert node_C.num_children() == 0
 
-    def test_insert_with_4_strings(self):
+    def test_insert_with_5_strings(self):
         tree = PrefixTree()
         # Insert new string that starts from root node
         tree.insert('ABC')
@@ -140,6 +145,30 @@ class PrefixTreeTest(unittest.TestCase):
         assert node_Z.is_terminal() is True
         assert node_Z.num_children() == 0
 
+        tree.insert('WWA')
+        assert tree.root.character == PrefixTree.START_CHARACTER
+        assert tree.root.is_terminal() is False
+        assert tree.root.num_children() == 3
+        assert tree.root.has_child('W') is True
+
+        node_W = tree.root.get_child('W')
+        assert node_W.character == 'W'
+        assert node_W.is_terminal() is False
+        assert node_W.num_children() == 1
+        assert node_W.has_child('W') is True
+
+        node_W = node_W.get_child('W')
+        assert node_W.character == 'W'
+        assert node_W.is_terminal() is False
+        assert node_W.num_children() == 1
+        assert node_W.has_child('A') is True
+
+        node_A = node_W.get_child('A')
+        assert node_A.character == 'A'
+        assert node_A.is_terminal() is True
+        assert node_A.num_children() == 0
+        
+
     def test_size_and_is_empty(self):
         tree = PrefixTree()
         # Verify size after initializing tree
@@ -194,7 +223,7 @@ class PrefixTreeTest(unittest.TestCase):
         assert tree.size == 4
 
     def test_contains(self):
-        strings = ['ABC', 'ABD', 'A', 'XYZ']
+        strings = ['ABC', 'ABD', 'A', 'XYZ', 'WWA']
         tree = PrefixTree(strings)
         # Verify contains for all substrings
         assert tree.contains('ABC') is True
@@ -212,9 +241,14 @@ class PrefixTreeTest(unittest.TestCase):
         assert tree.contains('X') is False
         assert tree.contains('Y') is False
         assert tree.contains('Z') is False
+        assert tree.contains('WWA') is True
+        assert tree.contains('') is False
+        assert tree.contains('WW') is False
+        assert tree.contains('WA') is False
+        
 
     def test_complete(self):
-        strings = ['ABC', 'ABD', 'A', 'XYZ']
+        strings = ['ABC', 'ABD', 'A', 'XYZ', 'WWA']
         tree = PrefixTree(strings)
         # Verify completions for all substrings
         assert tree.complete('ABC') == ['ABC']
@@ -232,11 +266,14 @@ class PrefixTreeTest(unittest.TestCase):
         assert tree.complete('X') == ['XYZ']
         assert tree.complete('Y') == []
         assert tree.complete('Z') == []
+        assert tree.complete('W') == ['WWA']
+        assert tree.complete('WW') == ['WWA']
+        assert tree.complete('WA') == []
 
     def test_strings(self):
         tree = PrefixTree()
         input_strings = []  # Strings that have been inserted into the tree
-        for string in ['ABC', 'ABD', 'A', 'XYZ']:  # Strings to be inserted
+        for string in ['ABC', 'ABD', 'A', 'XYZ', 'WWA']:  # Strings to be inserted
             # Insert new string and add to list of strings already inserted
             tree.insert(string)
             input_strings.append(string)
