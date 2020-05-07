@@ -77,8 +77,7 @@ class TestBinaryMinHeap(unittest.TestCase):
 
     def test_parent_index(self):
         heap = BinaryMinHeap()
-        with self.assertRaises(IndexError):
-            heap._parent_index(0)
+        
         assert heap._parent_index(1) == 0
         assert heap._parent_index(2) == 0
         assert heap._parent_index(3) == 1

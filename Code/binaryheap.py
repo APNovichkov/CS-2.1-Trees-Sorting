@@ -23,6 +23,7 @@ class BinaryMinHeap(object):
         """Return True if this heap is empty, or False otherwise."""
         # TODO: Check if empty based on how many items are in the list
         # ...
+        return len(self.items) == 0
 
     def size(self):
         """Return the number of items in this heap."""
@@ -32,6 +33,7 @@ class BinaryMinHeap(object):
         """Insert the given item into this heap.
         TODO: Best case running time: ??? under what conditions?
         TODO: Worst case running time: ??? under what conditions?"""
+
         # Insert the item at the end and bubble up to the root
         self.items.append(item)
         if self.size() > 1:
@@ -40,6 +42,7 @@ class BinaryMinHeap(object):
     def get_min(self):
         """Return the minimum item at the root of this heap.
         Best and worst case running time: O(1) because min item is the root."""
+
         if self.size() == 0:
             raise ValueError('Heap is empty and has no minimum item')
         assert self.size() > 0
@@ -49,6 +52,7 @@ class BinaryMinHeap(object):
         """Remove and return the minimum item at the root of this heap.
         TODO: Best case running time: ??? under what conditions?
         TODO: Worst case running time: ??? under what conditions?"""
+
         if self.size() == 0:
             raise ValueError('Heap is empty and has no minimum item')
         elif self.size() == 1:
@@ -69,6 +73,7 @@ class BinaryMinHeap(object):
         This method is more efficient than calling delete_min and then insert.
         TODO: Best case running time: ??? under what conditions?
         TODO: Worst case running time: ??? under what conditions?"""
+
         if self.size() == 0:
             raise ValueError('Heap is empty and has no minimum item')
         assert self.size() > 0
@@ -85,15 +90,27 @@ class BinaryMinHeap(object):
         Best case running time: O(1) if parent item is smaller than this item.
         Worst case running time: O(log n) if items on path up to root node are
         out of order. Maximum path length in complete binary tree is log n."""
+
         if index == 0:
             return  # This index is the root node (does not have a parent)
-        if not (0 <= index <= self._last_index()):
-            raise IndexError('Invalid index: {}'.format(index))
+        # if not (0 <= index <= self._last_index()):
+        #     raise IndexError('Invalid index: {}'.format(index))
+
+        c_index = index
+        p_index = self._parent_index(index)
+
+        while(self._valid_index(p_index) and self.items[c_index] < self.items[p_index]):
+            self._swap(c_index, p_index)
+            c_index = p_index
+            p_index = self._parent_index(c_index)
+
+
+
         # Get the item's value
-        item = self.items[index]
-        # Get the parent's index and value
-        parent_index = self._parent_index(index)
-        parent_item = self.items[parent_index]
+        # item = self.items[index]
+        # # Get the parent's index and value
+        # parent_index = self._parent_index(index)
+        # parent_item = self.items[parent_index]
         # TODO: Swap this item with parent item if values are out of order
         # ...
         # TODO: Recursively bubble up again if necessary
@@ -105,23 +122,51 @@ class BinaryMinHeap(object):
         Best case running time: O(1) if item is smaller than both child items.
         Worst case running time: O(log n) if items on path down to a leaf are
         out of order. Maximum path length in complete binary tree is log n."""
-        if not (0 <= index <= self._last_index()):
-            raise IndexError('Invalid index: {}'.format(index))
-        # Get the index of the item's left and right children
-        left_index = self._left_child_index(index)
-        right_index = self._right_child_index(index)
-        if left_index > self._last_index():
-            return  # This index is a leaf node (does not have any children)
-        # Get the item's value
-        item = self.items[index]
-        # TODO: Determine which child item to compare this node's item to
-        child_index = 0
-        # ...
-        # TODO: Swap this item with a child item if values are out of order
-        child_item = self.items[child_index]
+
+        p_index = index
+        left_index = self._left_child_index(p_index)
+        right_index = left_index + 1
+
+        while(self._valid_index(left_index)):
+            min_index = left_index
+            if(self._valid_index(right_index) and self.items[right_index] < self.items[left_index]):
+                min_index = right_index
+
+            if(self.items[p_index] < self.items[min_index]): 
+                break
+            
+            self._swap(p_index, min_index)
+            p_index = min_index
+            left_index = self._left_child_index(p_index)
+            right_index = left_index + 1
+
+
+
+
+
+        # if not (0 <= index <= self._last_index()):
+        #     raise IndexError('Invalid index: {}'.format(index))
+        # # Get the index of the item's left and right children
+        # left_index = self._left_child_index(index)
+        # right_index = self._right_child_index(index)
+        # if left_index > self._last_index():
+        #     return  # This index is a leaf node (does not have any children)
+        # # Get the item's value
+        # item = self.items[index]
+        # # TODO: Determine which child item to compare this node's item to
+        # child_index = 0
+        # # ...
+        # # TODO: Swap this item with a child item if values are out of order
+        # child_item = self.items[child_index]
         # ...
         # TODO: Recursively bubble down again if necessary
         # ...
+
+    def _swap(self, i, j):
+        self.items[i], self.items[j] = self.items[j], self.items[i]
+
+    def _valid_index(self, index):
+        return 0 <= index <= self._last_index()
 
     def _last_index(self):
         """Return the last valid index in the underlying array of items."""
@@ -129,8 +174,8 @@ class BinaryMinHeap(object):
 
     def _parent_index(self, index):
         """Return the parent index of the item at the given index."""
-        if index <= 0:
-            raise IndexError('Heap index {} has no parent index'.format(index))
+        # if index <= 0:
+        #     raise IndexError('Heap index {} has no parent index'.format(index))
         return (index - 1) >> 1  # Shift right to divide by 2
 
     def _left_child_index(self, index):
