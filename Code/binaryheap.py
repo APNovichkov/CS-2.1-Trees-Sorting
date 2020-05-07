@@ -145,11 +145,6 @@ class BinaryMinHeap(object):
         """Return the left child index of the item at the given index."""
         return (index << 1) + 1  # Shift left to multiply by 2
 
-    # WE dont even need this
-    def _right_child_index(self, index):
-        """Return the right child index of the item at the given index."""
-        return (index << 1) + 2  # Shift left to multiply by 2
-
 
 def test_binary_min_heap():
     # Create a binary min heap of 7 items
